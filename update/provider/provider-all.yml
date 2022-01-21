@@ -1,0 +1,40 @@
+proxies:
+- {name: 🇭🇰HK-20.205.63.211-302, server: 20.205.63.211, port: 14083, type: vmess, uuid: 8b94b74b-ce5d-3777-88f6-25aa7c7d05dd, alterId: 2, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /zz, tls: false, ws-headers: {Host: t.me/vpnhat}}
+- {name: 🇨🇳CN-120.197.88.216-417, server: cm-jm.okvpn.xyz, port: 20006, type: vmess, uuid: 2f44cc43-b8e4-4af1-817f-bf09091ca932, alterId: 1, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /, tls: false, ws-headers: {Host: cm-jm.okvpn.xyz}}
+- {name: 🇭🇰HK-20.187.87.167-138, server: zz.vip341.xyz, port: 35899, type: vmess, uuid: 892db7e4-1e1d-3e24-9f68-55df818e6aa1, alterId: 2, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /ny, tls: false, ws-headers: {Host: zz.vip341.xyz}}
+- {name: 🇦🇶LU-107.189.12.75-538, server: 107.189.12.75, port: 80, type: vmess, uuid: 261aeb5f-b6f7-359c-a321-9794bf344e12, alterId: 2, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /v2ray, tls: false, ws-headers: {Host: 107.189.12.75}}
+- {name: 🇺🇸US-66.90.99.21-466, server: jp-4.azure.v2ray.ikuuu.pro, port: 448, type: vmess, uuid: 997026df-c1fd-3a00-ad16-f062d6bd4871, alterId: 1, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /hls/cctv5phd.m3u8, tls: false, ws-headers: {Host: jp-4.azure.v2ray.ikuuu.pro}}
+- {name: 🇺🇸US-137.184.184.78-197, server: 137.184.184.78, port: 2052, type: vmess, uuid: 5580bd79-ba49-3f67-a710-5b917bdac2d8, alterId: 2, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /, tls: false, ws-headers: {Host: 137.184.184.78}}
+- {name: 🇺🇸US-173.230.145.10-645, server: 173.230.145.10, port: 11019, type: vmess, uuid: 89464027-d5d5-4660-ecc8-8be6d80b35d9, alterId: 4, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /aifxproxy, tls: false, ws-headers: {Host: https://www.freebaipiao.tk}}
+- {name: 🇨🇳CN-116.163.10.218-303, server: cu-cs.okvpn.xyz, port: 30014, type: vmess, uuid: 2f44cc43-b8e4-4af1-817f-bf09091ca932, alterId: 1, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /, tls: false, ws-headers: {Host: cu-cs.okvpn.xyz}}
+- {name: 🇨🇳CN-183.240.69.21-493, server: zj.haojiahuo.club, port: 30057, type: vmess, uuid: 4a6ada0c-e453-3217-8210-8556f9c92494, alterId: 1, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /videos, tls: false, ws-headers: {Host: xuexi.cn}}
+- {name: 🇺🇸US-137.184.184.83-643, server: 137.184.184.83, port: 2053, type: vmess, uuid: 5580bd79-ba49-3f67-a710-5b917bdac2d8, alterId: 2, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /, tls: false, ws-headers: {Host: 137.184.184.83}}
+- {name: 🇨🇳CN-116.163.10.218-419, server: cu-cs.okvpn.xyz, port: 30022, type: vmess, uuid: 2f44cc43-b8e4-4af1-817f-bf09091ca932, alterId: 1, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /, tls: false, ws-headers: {Host: cu-cs.okvpn.xyz}}
+- {name: 🇭🇰HK-103.26.121.116-482, server: wtt3.comefromchinatown.com, port: 80, type: vmess, uuid: 5c7b33c6-6d83-11eb-b77b-f23c913c8d2b, alterId: 2, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /, tls: false, ws-headers: {Host: broadcastlv.chat.bilibili.com}}
+- {name: 🇭🇰HK-218.255.253.35-481, server: wtt.comefromchinatown.com, port: 80, type: vmess, uuid: 5c7b33c6-6d83-11eb-b77b-f23c913c8d2b, alterId: 2, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /, tls: false, ws-headers: {Host: broadcastlv.chat.bilibili.com}}
+- {name: 🇺🇸US-66.90.99.21-474, server: jp04-vm0.ikuuu.casa, port: 448, type: vmess, uuid: 3c7919b0-87bd-3399-abd2-a79cd334c0c2, alterId: 1, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /hls/cctv5phd.m3u8, tls: false, ws-headers: {Host: t.me/vpnhat}}
+- {name: 🇨🇳CN-183.240.69.21-077, server: zj.haojiahuo.club, port: 30041, type: vmess, uuid: 4a6ada0c-e453-3217-8210-8556f9c92494, alterId: 1, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /videos, tls: false, ws-headers: {Host: xuexi.cn}}
+- {name: 🇭🇰HK-14.199.156.68-463, server: hkbn2.tcpbbr.net, port: 80, type: vmess, uuid: 5c7b33c6-6d83-11eb-b77b-f23c913c8d2b, alterId: 2, cipher: auto, skip-cert-vertify: false, network: ws, ws-path: /, tls: false, ws-headers: {Host: broadcastlv.chat.bilibili.com}}
+- {name: 🇬🇧GB-172.99.190.87-652, server: 172.99.190.87, port: 2376, type: ss, cipher: aes-256-gcm, password: faBAoD54k87UJG7}
+- {name: 🇩🇪DE-172.105.244.165-107, server: 172.105.244.165, port: 5004, type: ss, cipher: aes-256-gcm, password: g5MeD6Ft3CWlJId}
+- {name: 🇺🇸US-38.91.100.27-060, server: 38.91.100.27, port: 3389, type: ss, cipher: aes-256-gcm, password: Y6R9pAtvxxzmGC}
+- {name: 🇩🇪DE-172.105.244.165-106, server: 172.105.244.165, port: 3389, type: ss, cipher: aes-256-gcm, password: Y6R9pAtvxxzmGC}
+- {name: 🇺🇸US-142.202.48.58-024, server: 142.202.48.58, port: 7306, type: ss, cipher: aes-256-gcm, password: FoOiGlkAA9yPEGP}
+- {name: 🇩🇪DE-172.105.244.165-109, server: 172.105.244.165, port: 3306, type: ss, cipher: aes-256-gcm, password: Y6R9pAtvxxzmGC}
+- {name: 🇸🇬SG-81.90.189.18-658, server: 81.90.189.18, port: 806, type: ss, cipher: chacha20-ietf-poly1305, password: G!yBwPWH3Vao}
+- {name: 🇬🇧GB-172.99.190.186-099, server: 172.99.190.186, port: 5003, type: ss, cipher: aes-256-gcm, password: g5MeD6Ft3CWlJId}
+- {name: 🇨🇦CA-198.57.27.218-034, server: 198.57.27.218, port: 5003, type: ss, cipher: aes-256-gcm, password: g5MeD6Ft3CWlJId}
+- {name: 🇨🇦CA-134.195.196.3-004, server: 134.195.196.3, port: 3389, type: ss, cipher: aes-256-gcm, password: Y6R9pAtvxxzmGC}
+- {name: 🇬🇧GB-172.99.190.186-100, server: 172.99.190.186, port: 7306, type: ss, cipher: aes-256-gcm, password: FoOiGlkAA9yPEGP}
+- {name: 🇸🇬SG-81.90.188.137-651, server: 81.90.188.137, port: 810, type: ss, cipher: chacha20-ietf-poly1305, password: G!yBwPWH3Vao}
+- {name: 🇬🇧GB-172.99.190.186-001, server: 172.99.190.186, port: 7307, type: ss, cipher: aes-256-gcm, password: FoOiGlkAA9yPEGP}
+- {name: 🇨🇦CA-198.57.27.218-114, server: 198.57.27.218, port: 2376, type: ss, cipher: aes-256-gcm, password: faBAoD54k87UJG7}
+- {name: 🇺🇸US-72.167.33.106-544, server: 72.167.33.106, port: 443, type: trojan, password: a3fa58b581353bb375d2ddad0f327938, skip-cert-verify: false}
+- {name: 🇬🇧GB-185.105.191.92-545, server: 185.105.191.92, port: 443, type: trojan, password: 28d98f761aca9d636f44db62544628eb, skip-cert-verify: false}
+- {name: 🇺🇸US-72.167.45.6-559, server: 72.167.45.6, port: 443, type: trojan, password: 28d98f761aca9d636f44db62544628eb, skip-cert-verify: false}
+- {name: 🇺🇸US-72.167.45.6-546, server: 72.167.45.6, port: 443, type: trojan, password: a3fa58b581353bb375d2ddad0f327938, skip-cert-verify: false}
+- {name: 🇳🇱NL-185.171.120.144-555, server: 185.171.120.144, port: 443, type: trojan, password: 36ebef7d1b1d6205fd0c55f28800e674, skip-cert-verify: false}
+- {name: 🇯🇵JP-5.183.177.111-548, server: 5.183.177.111, port: 443, type: trojan, password: 28d98f761aca9d636f44db62544628eb, skip-cert-verify: false}
+- {name: 🇳🇱NL-89.31.127.151-557, server: 89.31.127.151, port: 443, type: trojan, password: 36ebef7d1b1d6205fd0c55f28800e674, skip-cert-verify: false}
+- {name: 🇳🇱NL-185.171.120.144-547, server: 185.171.120.144, port: 443, type: trojan, password: a3fa58b581353bb375d2ddad0f327938, skip-cert-verify: false}
+- {name: 🇭🇰HK-13.75.2.203-640, server: azure-hk.qcppl.com, port: 10008, type: trojan, password: 391869cf-f21d-4b24-a6e6-862cac94bb15, skip-cert-verify: false}
