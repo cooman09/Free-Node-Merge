@@ -2,17 +2,19 @@
 
 import re, yaml, json, base64
 import requests, socket, urllib.parse
+import socket, time
 
 import geoip2.database
 
 from requests.adapters import HTTPAdapter
+from speedtest import ping
 
 
 class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链接内容
 
     # {'input_type': ['url', 'content'],'output_type': ['url', 'YAML', 'Base64']}
 
-    def convert(content, input_type='url', output_type='url', proxies_filter= False): # convert Url to YAML or Base64
+    def convert(content, input_type='url', output_type='url'): # convert Url to YAML or Base64
 
         if input_type == 'url':
             s = requests.Session()
@@ -46,9 +48,6 @@ class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链
             print('Url 订阅内容无法解析')
 
         if url_content != 'Url 订阅内容无法解析':
-            if proxies_filter:
-                url_content = sub_convert.proxies_filter(sub_convert.url_format(url_content), True, True)
-
             if output_type == 'YAML':
                 return url_content
             elif output_type == 'Base64':
@@ -160,32 +159,35 @@ class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链
                     #yaml_config_str = ['name', 'server', 'port', 'type', 'uuid', 'alterId', 'cipher', 'tls', 'skip-cert-verify', 'network', 'ws-path', 'ws-headers']
                     #vmess_config_str = ['ps', 'add', 'port', 'id', 'aid', 'scy', 'tls', 'net', 'host', 'path']
                     # 生成 yaml 节点字典
-                    yaml_url.setdefault('name', urllib.parse.unquote(str(vmess_config['ps'])))
-                    yaml_url.setdefault('server', vmess_config['add'])
-                    yaml_url.setdefault('port', int(vmess_config['port']))
-                    yaml_url.setdefault('type', 'vmess')
-                    yaml_url.setdefault('uuid', vmess_config['id'])
-                    yaml_url.setdefault('alterId', int(vmess_config['aid']))
-                    yaml_url.setdefault('cipher', vmess_config['scy'])
-                    yaml_url.setdefault('skip-cert-vertify', False)
-                    if vmess_config['net'] == '' or vmess_config['net'] is False or vmess_config['net'] is None:
-                        yaml_url.setdefault('network', 'tcp')
+                    if vmess_config['id'] == '' or vmess_config['id'] is None:
+                        print('节点格式错误')
                     else:
-                        yaml_url.setdefault('network', vmess_config['net'])
-                    if vmess_config['net'] == '' or vmess_config['net'] is False or vmess_config['net'] is None:
-                        yaml_url.setdefault('network', '/')
-                    else:
-                        yaml_url.setdefault('ws-path', vmess_config['path'])
-                    if vmess_config['tls'] == '' or vmess_config['tls'] is False or vmess_config['tls'] is None:
-                        yaml_url.setdefault('tls', False)
-                    else:
-                        yaml_url.setdefault('tls', True)
-                    if vmess_config['host'] == '':
-                        yaml_url.setdefault('ws-headers', {'Host': vmess_config['add']})
-                    else:
-                        yaml_url.setdefault('ws-headers', {'Host': vmess_config['host']})
+                        yaml_url.setdefault('name', urllib.parse.unquote(str(vmess_config['ps'])))
+                        yaml_url.setdefault('server', vmess_config['add'])
+                        yaml_url.setdefault('port', int(vmess_config['port']))
+                        yaml_url.setdefault('type', 'vmess')
+                        yaml_url.setdefault('uuid', vmess_config['id'])
+                        yaml_url.setdefault('alterId', int(vmess_config['aid']))
+                        yaml_url.setdefault('cipher', vmess_config['scy'])
+                        yaml_url.setdefault('skip-cert-vertify', False)
+                        if vmess_config['net'] == '' or vmess_config['net'] is False or vmess_config['net'] is None:
+                            yaml_url.setdefault('network', 'tcp')
+                        else:
+                            yaml_url.setdefault('network', vmess_config['net'])
+                        if vmess_config['path'] == '' or vmess_config['path'] is False or vmess_config['path'] is None:
+                            yaml_url.setdefault('ws-path', '/')
+                        else:
+                            yaml_url.setdefault('ws-path', vmess_config['path'])
+                        if vmess_config['tls'] == '' or vmess_config['tls'] is False or vmess_config['tls'] is None:
+                            yaml_url.setdefault('tls', False)
+                        else:
+                            yaml_url.setdefault('tls', True)
+                        if vmess_config['host'] == '':
+                            yaml_url.setdefault('ws-headers', {'Host': vmess_config['add']})
+                        else:
+                            yaml_url.setdefault('ws-headers', {'Host': vmess_config['host']})
 
-                    url_list.append(str(yaml_url))
+                        url_list.append(str(yaml_url))
                 except Exception as err:
                     print(f'yaml_encode 解析 vmess 节点发生错误：{err}')
                     pass
@@ -290,7 +292,7 @@ class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链
         base64_content = base64.b64encode(content.encode('utf-8')).decode('ascii')
         return base64_content
 
-    def proxies_filter(urls, dup_rm_enabled=True, format_name_enabled=True): # 对节点进行区域的筛选和重命名，区域判断(Clash YAML)：https://blog.csdn.net/CSDN_duomaomao/article/details/89712826 (ip-api)
+    def proxies_filter(urls, dup_rm_enabled=True, format_name_enabled=True, speedtest=False): # 对节点进行区域的筛选和重命名，区域判断(Clash YAML)：https://blog.csdn.net/CSDN_duomaomao/article/details/89712826 (ip-api)
 
         if 'proxies:' in urls:
             yaml_content_raw = urls
@@ -303,7 +305,7 @@ class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链
         proxies_list = yaml_content['proxies']
 
         # 去重
-        if dup_rm_enabled == True:
+        if dup_rm_enabled:
             begin = 0
             raw_length = len(proxies_list)
             length = len(proxies_list)
@@ -325,6 +327,22 @@ class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链
                         length -= 1
                     begin_2 += 1
                 begin += 1
+
+        # 测速
+        if speedtest:
+            sum = len(proxies_list)
+            print(f'节点总数：{sum}')
+            for proxy in proxies_list:
+                pos = proxies_list.index(proxy) + 1
+                print(f'测试进度({sum}/{pos})')
+                server = proxy['server']
+                port = proxy['port']
+                ping_result = ping(server, port).tcp_ping()
+                ping_result_g = ping(server, port).google_ping()
+                if ping_result[0] >= 0.3 and ping_result_g[0] >= 0.3:
+                    proxies_list.remove(proxy)
+                elif ping_result[1] < 1 or ping_result_g[1] < 1:
+                    proxies_list.remove(proxy)
 
         # 改名
         for proxy in proxies_list:
@@ -378,8 +396,6 @@ class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链
                 elif len(proxies_list) < 99:
                     proxy['name'] = f'{name_emoji}{country_code}-{ip}-{proxy_index:0>2d}'
 
-            
-
             proxy_str = str(proxy)
             url_list.append(proxy_str)
 
@@ -430,7 +446,6 @@ class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链
             sub_content = sub_content.replace('\'', '').replace('"', '')
             url_list = []
             try:
-
                 lines = re.split(r'\n+', sub_content)
                 line_fix_list = []
                 
@@ -484,7 +499,7 @@ class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链
                                 item['ws-headers']['Host'] = item['ws-headers'].pop("HOST")
                         except KeyError:
                             pass
-                        
+
                     url_content = yaml.dump(content_yaml, default_flow_style=False, sort_keys=False, allow_unicode=True, width=750, indent=2)
 
                     return url_content
@@ -493,4 +508,3 @@ class sub_convert(): # 将订阅链接中YAML，Base64等内容转换为 Url 链
             except:
                 print('Sub_content 格式错误')
                 return ''
-
