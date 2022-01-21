@@ -50,7 +50,8 @@ def sub_merge(url_list): # # 将转换后的所有 Url 链接内容合并转换 
 
     print('Merging nodes...\n')
     content_raw = ''.join(content_list) # https://python3-cookbook.readthedocs.io/zh_CN/latest/c02/p14_combine_and_concatenate_strings.html
-    content_yaml = sub_convert.convert(content_raw,'content','YAML', True)
+    content_speedtest = sub_convert.proxies_filter(content_raw,True,True,False)
+    content_yaml = sub_convert.convert(content_speedtest,'content','YAML')
     content_base64 = sub_convert.convert(content_yaml,'content','Base64')
     content = sub_convert.convert(content_yaml,'content','url')
 
@@ -90,7 +91,7 @@ def geoip_update(url):
 
 sub_list = read_list()
 
-update_url.update([0,])
+update_url.update([0,22])
 geoip_update('https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb')
 
 merge = sub_merge(sub_list)
