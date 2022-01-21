@@ -1,6 +1,8 @@
-# TopFreeProxies
+# Free Node Merge
 
 ## 仓库介绍
+
+修改自[alanbobs999/TopFreeProxies](https://github.com/alanbobs999/TopFreeProxies)
 
 对网络上各免费节点池及博主分享的节点进行测速筛选出较为稳定高速的节点，再导入到仓库中进行分享记录。所筛选的节点链接在仓库`./sub/sub_list.json`文件中，其中大部分为其他`GitHub`仓库链接，这些链接包含的所有节点合并在仓库`./sub/sub_merge.txt`中。
 
@@ -12,17 +14,17 @@
 
 将以下订阅链接导入相应客户端即可。链接中大部分为 SS 协议节点，少量 Vmess, Trojan ,SSR 协议节点，建议选择协议支持完整的客户端。
 
-- [多协议Base64编码](https://raw.githubusercontent.com/arlenWKX/TopFreeProxies/master/Eternity)
-- [Clash订阅链接](https://raw.githubusercontent.com/arlenWKX/TopFreeProxies/master/Eternity.yml)
-- [原始多协议Base64编码](https://raw.githubusercontent.com/arlenWKX/TopFreeProxies/master/sub/sub_merge_base64.txt)
-- [原始Clash订阅链接](https://raw.githubusercontent.com/arlenWKX/TopFreeProxies/master/sub/sub_merge_yaml.yml)
+- [多协议Base64编码](https://raw.githubusercontent.com/arlenWKX/Free-Node-Merge/master/Eternity)
+- [Clash订阅链接](https://raw.githubusercontent.com/arlenWKX/Free-Node-Merge/master/Eternity.yml)
+- [原始多协议Base64编码](https://raw.githubusercontent.com/arlenWKX/Free-Node-Merge/master/sub/sub_merge_base64.txt)
+- [原始Clash订阅链接](https://raw.githubusercontent.com/arlenWKX/Free-Node-Merges/master/sub/sub_merge_yaml.yml)
 
 另有国内加速链接：
 
-- [多协议Base64编码](https://raw.fastgit.org/arlenWKX/TopFreeProxies/master/Eternity)
-- [Clash订阅链接](https://raw.fastgit.org/arlenWKX/TopFreeProxies/master/Eternity.yml)
-- [原始多协议Base64编码](https://raw.fastgit.org/arlenWKX/TopFreeProxies/master/sub/sub_merge_base64.txt)
-- [原始Clash订阅链接](https://raw.fastgit.org/arlenWKX/TopFreeProxies/master/sub/sub_merge_yaml.yml)
+- [多协议Base64编码](https://raw.fastgit.org/arlenWKX/Free-Node-Merge/master/Eternity)
+- [Clash订阅链接](https://raw.fastgit.org/arlenWKX/Free-Node-Merge/master/Eternity.yml)
+- [原始多协议Base64编码](https://raw.fastgit.org/arlenWKX/Free-Node-Merge/master/sub/sub_merge_base64.txt)
+- [原始Clash订阅链接](https://raw.fastgit.org/arlenWKX/Free-Node-Merge/master/sub/sub_merge_yaml.yml)
 
 >`Clash`链接所使用的配置在仓库`./update/provider/`中，有相应配置文件和以国家分类的`proxy-provider`。
 >
