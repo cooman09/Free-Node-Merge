@@ -1,97 +1,69 @@
 #!/usr/bin/env python3
 
-from sub_convert import sub_convert # Python 之间互相调用文件https://blog.csdn.net/winycg/article/details/78512300
-from list_update import update_url
-
+from datetime import timedelta, datetime
 import json, re
-from urllib import request
-
-
-# 分析当前项目依赖 https://blog.csdn.net/lovedingd/article/details/102522094
-
+import requests
+from requests.adapters import HTTPAdapter
 
 # 文件路径定义
-Eterniy = './Eternity'
-
 sub_list_json = './sub/sub_list.json'
-sub_merge_path = './sub/'
-sub_list_path = './sub/list/'
 
 
-def sub_merge(url_list): # # 将转换后的所有 Url 链接内容合并转换 YAML or Base64, ，并输出文件，输入订阅列表。
+with open(sub_list_json, 'r', encoding='utf-8') as f: # 载入订阅链接
+    raw_list = json.load(f)
+    f.close()
 
-    content_list = []
-    for index in range(len(url_list)):
-        content = sub_convert.convert(url_list[index]['url'],'url','url')
-        ids = url_list[index]['id']
-        remarks = url_list[index]['remarks']
-        #try:
-        if content == 'Url 解析错误':
-            file = open(f'{sub_list_path}{ids:0>2d}.txt', 'w', encoding= 'utf-8')
-            file.write('Url 解析错误')
-            file.close()
-            print(f'Writing error of {remarks} to {ids:0>2d}.txt\n')
-        elif content == 'Url 订阅内容无法解析':
-            file = open(f'{sub_list_path}{ids:0>2d}.txt', 'w', encoding= 'utf-8')
-            file.write('Url 订阅内容无法解析')
-            file.close()
-            print(f'Writing error of {remarks} to {ids:0>2d}.txt\n')
-        elif content != None:
-            content_list.append(content)
-            file = open(f'{sub_list_path}{ids:0>2d}.txt', 'w', encoding= 'utf-8')
-            file.write(content)
-            file.close()
-            print(f'Writing content of {remarks} to {ids:0>2d}.txt\n')
-        else:
-            file = open(f'{sub_list_path}{ids:0>2d}.txt', 'w', encoding= 'utf-8')
-            file.write('Url 订阅内容无法解析')
-            file.close()
-            print(f'Writing error of {remarks} to {ids:0>2d}.txt\n')
-
-    print('Merging nodes...\n')
-    content_raw = ''.join(content_list) # https://python3-cookbook.readthedocs.io/zh_CN/latest/c02/p14_combine_and_concatenate_strings.html
-    content_speedtest = sub_convert.proxies_filter(content_raw,True,True,False)
-    content_yaml = sub_convert.convert(content_speedtest,'content','YAML')
-    content_base64 = sub_convert.convert(content_yaml,'content','Base64')
-    content = sub_convert.convert(content_yaml,'content','url')
-
-    def content_write(file, output_type):
-        file = open(file, 'w', encoding = 'utf-8')
-        file.write(output_type)
-        file.close
-    write_list = [f'{sub_merge_path}/sub_merge.txt', f'{sub_merge_path}/sub_merge_base64.txt', f'{sub_merge_path}/sub_merge_yaml.yml']
-    content_type = (content, content_base64, content_yaml)
-    for index in range(len(write_list)):
-        content_write(write_list[index], content_type[index])
-    print('Done!')
-
-def read_list():
-    with open(sub_list_json, 'r', encoding='utf-8') as f: # 将 sub_list.json Url 内容读取为列表
-        raw_list = json.load(f)
-    input_list = []
-    for index in range(len(raw_list)):
-        if raw_list[index]['enabled']:
-            urls = re.split('\|',raw_list[index]['url'])
-            if len(urls) > 1:
-                for url in urls:
-                    single_raw_list = raw_list[index]
-                    single_raw_list['url'] = url
-                    input_list.append(single_raw_list)
-            input_list.append(raw_list[index])
-    return input_list
-
-def geoip_update(url):
-    print('Downloading Country.mmdb...')
+def url_test(url):
+    s = requests.Session()
+    s.mount('http://', HTTPAdapter(max_retries=5))
+    s.mount('https://', HTTPAdapter(max_retries=5))
     try:
-        request.urlretrieve(url, './utils/Country.mmdb')
-        print('Success!\n')
+        resp = s.get(url, timeout=3)
+        url_updated = True
     except Exception:
-        print('Failed!\n')
-        pass
+        url_updated = False
+    return url_updated
 
-sub_list = read_list()
+class update_url():
 
-update_url.update([0,22])
-geoip_update('https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb')
+    def update(id_allow_list=[]):
+        if len(id_allow_list) > 0:
+            for id in id_allow_list:
+                if id == 0:
+                    update_url.update_id_0()
+                if id == 22:
+                    update_url.update_id_22()
 
-merge = sub_merge(sub_list)
+            updated_list = json.dumps(raw_list, sort_keys=False, indent=2, ensure_ascii=False)
+            file = open(sub_list_json, 'w', encoding='utf-8')
+            file.write(updated_list)
+            file.close()
+        else:
+            print('Don\'t need to update.')
+                
+    def update_id_0(): # remarks: pojiezhiyuanjun/freev2, 将原链接更新至 https://raw.fastgit.org/pojiezhiyuanjun/freev2/master/%MM%(DD - 1).txt
+        raw_url = raw_list[0]['url']
+        yesterday = (datetime.today() + timedelta(-1)).strftime('%m%d')# 得到当前日期前一天 https://blog.csdn.net/wanghuafengc/article/details/42458721
+        url_update = raw_url[:-8] + yesterday + raw_url[-4:]# 修改字符串中的某一位字符 https://www.zhihu.com/question/31800070/answer/53345749
+        print(f'Change id 0 url to : {url_update}\n')
+        raw_list[0]['url'] = url_update
+    
+    def update_id_22():
+        date_inurl = datetime.today().strftime('%Y/%m/%Y-%m-%d')
+        #date_inurl = '2021/12/2021-12-08'
+        url_update = f'https://www.mattkaydiary.com/{date_inurl}-free-v2ray-clash-nodes.html'
+        try:
+            resp = requests.get(url_update, timeout=5)
+            raw_content = resp.text
+            raw_content = raw_content.replace('amp;', '')
+
+            #print(raw_content.find('v2ray(请开启代理后再拉取)&#65306;https://drive.google.com/uc'))
+            #print(raw_content[raw_content.find('v2ray(请开启代理后再拉取)&#65306;https://drive.google.com/uc'):raw_content.find('v2ray(请开启代理后再拉取)&#65306;https://drive.google.com/uc')+100])
+            pattern = re.compile(r'v2ray\(请开启代理后再拉取\)&#65306;https://drive\.google\.com/uc\?export=download&id=\w*-*\w*')
+            
+            url_update = re.findall(pattern, raw_content)[0][24:]
+            print(f'Change id 22 url to : {url_update}\n')
+            raw_list[22]['url'] = url_update
+        except Exception:
+            print('Id 22 url 无需更新')
+            pass
